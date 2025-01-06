@@ -1,0 +1,41 @@
+services:
+  app:
+    container_name: dice-otel-nest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+      - '9464:9464'
+    environment:
+      - PORT=3000
+      - OTEL_COLLECTOR_URL=http://otel-collector:4318
+    depends_on:
+      - otel-collector
+
+  prometheus:
+    container_name: dice-prometheus
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - '9090:9090'
+    depends_on:
+      - app
+
+  grafana:
+    image: grafana/grafana
+    container_name: dice-grafana
+    ports:
+      - '3001:3000'
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
+  otel-collector:
+    container_name: otel-collector
+    image: otel/opentelemetry-collector-contrib
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - '4317:4317'
+      - '4318:4318'
