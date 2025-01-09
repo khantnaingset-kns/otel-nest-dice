@@ -1,8 +1,8 @@
-## Otel Nest Dice
+## Loggin Otel Nest
 
 ## Description
 
-Just a dice roll api instrumented with Otel.
+Just an another logging api instrumented with Otel.
 
 ## Project setup
 
