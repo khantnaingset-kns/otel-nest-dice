@@ -9,7 +9,7 @@ replicaCount: 1
 image:
   repository: khantki/otel-nest-dice:0.1.1
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
